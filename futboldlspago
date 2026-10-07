@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FutbolData 2026</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background: #07111f;
+        color: #fff;
+        min-height: 100vh;
+    }
+
+    button {
+        border: none;
+        cursor: pointer;
+    }
+
+    /* HEADER */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(5, 15, 28, 0.95);
+        border-bottom: 1px solid #17304d;
+        backdrop-filter: blur(12px);
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: auto;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo-ball {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00e676, #00a86b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        box-shadow: 0 0 20px rgba(0, 230, 118, .25);
+    }
+
+    .logo h1 {
+        font-size: 21px;
+    }
+
+    .logo span {
+        color: #00e676;
+    }
+
+    .user-mini {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #0c1c30;
+        padding: 7px 12px;
+        border-radius: 30px;
+    }
+
+    .avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00e676, #008cff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+
+    /* LAYOUT */
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 25px 20px 100px;
+    }
+
+    .welcome {
+        margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+        font-size: 28px;
+        margin-bottom: 7px;
+    }
+
+    .welcome p {
+        color: #91a4ba;
+    }
+
+    /* BALANCE */
+    .balance-card {
+        background: linear-gradient(135deg, #0d2940, #08251e);
+        border: 1px solid #194761;
+        border-radius: 22px;
+        padding: 25px;
+        margin-bottom: 25px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .balance-card::after {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(0, 230, 118, .08);
+        right: -60px;
+        top: -70px;
+    }
+
+    .balance-label {
+        color: #9db1c7;
+        font-size: 14px;
+    }
+
+    .balance {
+        font-size: 38px;
+        font-weight: bold;
+        margin: 8px 0;
+        color: #00e676;
+    }
+
+    .balance-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .btn {
+        padding: 12px 18px;
+        border-radius: 12px;
+        font-weight: bold;
+        transition: .2s;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-green {
+        background: #00e676;
+        color: #03120b;
+    }
+
+    .btn-dark {
+        background: #14283e;
+        color: white;
+        border: 1px solid #24415e;
+    }
+
+    .btn-red {
+        background: #ff4d67;
+        color: white;
+    }
+
+    .btn-blue {
+        background: #1687ff;
+        color: white;
+    }
+
+    /* GRID */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: #0c1b2d;
+        border: 1px solid #19324c;
+        border-radius: 18px;
+        padding: 20px;
+    }
+
+    .stat-icon {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    .stat-title {
+        color: #8fa3b8;
+        font-size: 13px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    /* SECTIONS */
+    .section {
+        margin-top: 30px;
+    }
+
+    .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .section-title h3 {
+        font-size: 20px;
+    }
+
+    /* PROFILE */
+    .profile-card {
+        background: #0c1b2d;
+        border: 1px solid #19324c;
+        border-radius: 20px;
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 15px;
+    }
+
+    .big-avatar {
+        width: 70px;
+        height: 70px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00e676, #008cff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .profile-info {
+        flex: 1;
+    }
+
+    .profile-info h3 {
+        margin-bottom: 5px;
+    }
+
+    .profile-info p {
+        color: #8da0b5;
+        font-size: 14px;
+    }
+
+    .badge {
+        display: inline-block;
+        margin-top: 8px;
+        background: rgba(0, 230, 118, .12);
+        color: #00e676;
+        padding: 5px 9px;
+        border-radius: 20px;
+        font-size: 11px;
+    }
+
+    /* TABLE */
+    .table-box {
+        overflow-x: auto;
+        background: #0c1b2d;
+        border: 1px solid #19324c;
+        border-radius: 18px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 1px solid #19324c;
+    }
+
+    th {
+        color: #8195aa;
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+
+    td {
+        font-size: 14px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* MENU */
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .menu-card {
+        background: #0c1b2d;
+        border: 1px solid #19324c;
+        padding: 20px;
+        border-radius: 18px;
+        transition: .2s;
+    }
+
+    .menu-card:hover {
+        border-color: #00e676;
+        transform: translateY(-3px);
+    }
+
+    .menu-card .icon {
+        font-size: 27px;
+        margin-bottom: 12px;
+    }
+
+    .menu-card h4 {
+        margin-bottom: 7px;
+    }
+
+    .menu-card p {
+        color: #8296ab;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* ADMIN */
+    .admin {
+        border: 1px solid #704d16;
+        background: linear-gradient(135deg, #211b0b, #151b20);
+    }
+
+    .admin-title {
+        color: #ffc107;
+    }
+
+    /* MODAL */
+    .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.75);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 500;
+        padding: 20px;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-box {
+        width: 100%;
+        max-width: 450px;
+        background: #0d1d30;
+        border: 1px solid #23415f;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 20px 70px rgba(0,0,0,.5);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .close {
+        background: transparent;
+        color: #9cafc3;
+        font-size: 25px;
+    }
+
+    label {
+        display: block;
+        color: #91a4b8;
+        font-size: 13px;
+        margin: 13px 0 7px;
+    }
+
+    input, select {
+        width: 100%;
+        background: #081625;
+        border: 1px solid #24405c;
+        color: white;
+        padding: 13px;
+        border-radius: 10px;
+        outline: none;
+    }
+
+    input:focus, select:focus {
+        border-color: #00e676;
+    }
+
+    .modal-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .modal-buttons button {
+        flex: 1;
+    }
+
+    /* MOBILE NAV */
+    .bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #081523;
+        border-top: 1px solid #19324c;
+        z-index: 200;
+        padding: 8px;
+    }
+
+    .nav-item {
+        flex: 1;
+        text-align: center;
+        color: #8297ad;
+        font-size: 11px;
+        padding: 7px;
+    }
+
+    .nav-item span {
+        display: block;
+        font-size: 20px;
+        margin-bottom: 3px;
+    }
+
+    .nav-item.active {
+        color: #00e676;
+    }
+
+    .empty {
+        padding: 30px;
+        text-align: center;
+        color: #778ca2;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width: 900px) {
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .menu {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media(max-width: 600px) {
+        .container {
+            padding: 20px 14px 90px;
+        }
+
+        .header-content {
+            padding: 12px 14px;
+        }
+
+        .logo h1 {
+            font-size: 17px;
+        }
+
+        .user-mini {
+            padding: 5px 8px;
+        }
+
+        .user-mini div:last-child {
+            display: none;
+        }
+
+        .welcome h2 {
+            font-size: 23px;
+        }
+
+        .balance {
+            font-size: 32px;
+        }
+
+        .grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .stat-card {
+            padding: 15px;
+        }
+
+        .menu {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-card {
+            padding: 16px;
+        }
+
+        .bottom-nav {
+            display: flex;
+        }
+
+        .header-content {
+            position: relative;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <div class="logo-ball">⚽</div>
+            <h1>FutbolData <span>2026</span></h1>
+        </div>
+
+        <div class="user-mini">
+            <div class="avatar" id="miniAvatar">A</div>
+            <div>
+                <strong id="miniName">Anthony</strong>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="welcome">
+        <h2>¡Bienvenido! 👋</h2>
+        <p>Tu centro de estadísticas, saldo y recompensas.</p>
+    </div>
+
+    <!-- SALDO -->
+    <div class="balance-card">
+        <div class="balance-label">SALDO DISPONIBLE</div>
+        <div class="balance" id="balance">$0.00</div>
+
+        <div class="balance-actions">
+            <button class="btn btn-green" onclick="openModal('depositModal')">
+                ➕ Depositar
+            </button>
+
+            <button class="btn btn-dark" onclick="openModal('withdrawModal')">
+                💸 Sacar saldo
+            </button>
+        </div>
+    </div>
+
+    <!-- ESTADÍSTICAS -->
+    <div class="grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">⚽</div>
+            <div class="stat-title">Partidos</div>
+            <div class="stat-value">24</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-title">Victorias</div>
+            <div class="stat-value">18</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-title">Racha</div>
+            <div class="stat-value">7</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-title">Puntos</div>
+            <div class="stat-value">1,850</div>
+        </div>
+
+    </div>
+
+    <!-- PERFIL -->
+    <section class="section">
+
+        <div class="section-title">
+            <h3>👤 Mi perfil</h3>
+        </div>
+
+        <div class="profile-card">
+
+            <div class="big-avatar" id="bigAvatar">A</div>
+
+            <div class="profile-info">
+                <h3 id="profileName">Anthony</h3>
+                <p id="profileUsername">@anthony</p>
+                <span class="badge">⚡ Usuario activo</span>
+            </div>
+
+            <button class="btn btn-dark" onclick="editProfile()">
+                Editar
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- MOVIMIENTOS -->
+    <section class="section">
+
+        <div class="section-title">
+            <h3>💳 Movimientos recientes</h3>
+        </div>
+
+        <div class="table-box">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transactions">
+
+                    <tr>
+                        <td>🎁 Regalo</td>
+                        <td>+$10.00</td>
+                        <td><span class="badge">Completado</span></td>
+                        <td>Hoy</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- OPCIONES -->
+    <section class="section">
+
+        <div class="section-title">
+            <h3>⚡ Acciones rápidas</h3>
+        </div>
+
+        <div class="menu">
+
+            <div class="menu-card" onclick="openModal('depositModal')">
+                <div class="icon">💰</div>
+                <h4>Depositar saldo</h4>
+                <p>Solicita una recarga y espera la aprobación del administrador.</p>
+            </div>
+
+            <div class="menu-card" onclick="openModal('withdrawModal')">
+                <div class="icon">📲</div>
+                <h4>Sacar saldo</h4>
+                <p>Solicita un retiro indicando la cantidad y número Cubacel.</p>
+            </div>
+
+            <div class="menu-card" onclick="showGifts()">
+                <div class="icon">🎁</div>
+                <h4>Mis regalos</h4>
+                <p>Consulta los regalos que te ha enviado el administrador.</p>
+            </div>
+
+            <div class="menu-card" onclick="showStats()">
+                <div class="icon">📊</div>
+                <h4>Estadísticas</h4>
+                <p>Consulta tus puntos y estadísticas dentro de FutbolData.</p>
+            </div>
+
+            <div class="menu-card" onclick="showHistory()">
+                <div class="icon">🧾</div>
+                <h4>Historial</h4>
+                <p>Revisa tus movimientos y solicitudes anteriores.</p>
+            </div>
+
+            <div class="menu-card" onclick="alert('Próximamente podrás configurar más opciones.')">
+                <div class="icon">⚙️</div>
+                <h4>Configuración</h4>
+                <p>Personaliza tu experiencia en FutbolData 2026.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ADMIN -->
+    <section class="section">
+
+        <div class="profile-card admin">
+
+            <div class="big-avatar">👑</div>
+
+            <div class="profile-info">
+                <h3 class="admin-title">Panel de administrador</h3>
+                <p>Acceso exclusivo para Anthony.</p>
+                <span class="badge" style="color:#ffc107;background:rgba(255,193,7,.12)">
+                    Administrador
+                </span>
+            </div>
+
+            <button class="btn btn-blue" onclick="openAdmin()">
+                Entrar
+            </button>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- NAV MOBILE -->
+<div class="bottom-nav">
+
+    <div class="nav-item active" onclick="scrollToTop()">
+        <span>🏠</span>
+        Inicio
+    </div>
+
+    <div class="nav-item" onclick="openModal('depositModal')">
+        <span>💰</span>
+        Saldo
+    </div>
+
+    <div class="nav-item" onclick="showGifts()">
+        <span>🎁</span>
+        Regalos
+    </div>
+
+    <div class="nav-item" onclick="openAdmin()">
+        <span>👑</span>
+        Admin
+    </div>
+
+</div>
+
+<!-- MODAL DEPÓSITO -->
+<div class="modal" id="depositModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h3>💰 Solicitar depósito</h3>
+            <button class="close" onclick="closeModal('depositModal')">×</button>
+        </div>
+
+        <label>Cantidad</label>
+        <input type="number" id="depositAmount" placeholder="Ej: 10">
+
+        <label>Método</label>
+        <select id="depositMethod">
+            <option>Transferencia</option>
+            <option>Otro método</option>
+        </select>
+
+        <div class="modal-buttons">
+            <button class="btn btn-dark" onclick="closeModal('depositModal')">
+                Cancelar
+            </button>
+
+            <button class="btn btn-green" onclick="requestDeposit()">
+                Enviar solicitud
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL RETIRO -->
+<div class="modal" id="withdrawModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h3>📲 Sacar saldo</h3>
+            <button class="close" onclick="closeModal('withdrawModal')">×</button>
+        </div>
+
+        <label>Cantidad a retirar</label>
+        <input type="number" id="withdrawAmount" placeholder="Ej: 5">
+
+        <label>Número Cubacel receptor</label>
+        <input type="tel" id="cubacelNumber" placeholder="Ej: 5XXXXXXX">
+
+        <p style="color:#7f94aa;font-size:12px;margin-top:12px;">
+            Tu solicitud será enviada al administrador. El saldo solo se descontará cuando sea aprobada.
+        </p>
+
+        <div class="modal-buttons">
+            <button class="btn btn-dark" onclick="closeModal('withdrawModal')">
+                Cancelar
+            </button>
+
+            <button class="btn btn-green" onclick="requestWithdraw()">
+                Solicitar retiro
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL PERFIL -->
+<div class="modal" id="profileModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h3>👤 Editar perfil</h3>
+            <button class="close" onclick="closeModal('profileModal')">×</button>
+        </div>
+
+        <label>Nombre</label>
+        <input type="text" id="editName">
+
+        <label>Usuario</label>
+        <input type="text" id="editUsername">
+
+        <div class="modal-buttons">
+            <button class="btn btn-dark" onclick="closeModal('profileModal')">
+                Cancelar
+            </button>
+
+            <button class="btn btn-green" onclick="saveProfile()">
+                Guardar
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    /* ============================
+       DATOS LOCALES
+    ============================ */
+
+    let data = JSON.parse(localStorage.getItem("futbolData2026")) || {
+
+        name: "Anthony",
+        username: "@anthony",
+        balance: 0,
+
+        transactions: [
+            {
+                type: "🎁 Regalo",
+                amount: 10,
+                status: "Completado",
+                date: "Hoy"
+            }
+        ],
+
+        withdrawals: [],
+        deposits: [],
+
+        stats: {
+            matches: 24,
+            wins: 18,
+            streak: 7,
+            points: 1850
+        }
+    };
+
+
+    function saveData() {
+        localStorage.setItem(
+            "futbolData2026",
+            JSON.stringify(data)
+        );
+    }
+
+
+    /* ============================
+       ACTUALIZAR INTERFAZ
+    ============================ */
+
+    function updateUI() {
+
+        document.getElementById("balance").textContent =
+            "$" + Number(data.balance).toFixed(2);
+
+        document.getElementById("miniName").textContent =
+            data.name;
+
+        document.getElementById("profileName").textContent =
+            data.name;
+
+        document.getElementById("profileUsername").textContent =
+            data.username;
+
+        let first =
+            data.name.charAt(0).toUpperCase();
+
+        document.getElementById("miniAvatar").textContent =
+            first;
+
+        document.getElementById("bigAvatar").textContent =
+            first;
+
+        let table =
+            document.getElementById("transactions");
+
+        table.innerHTML = "";
+
+        if (data.transactions.length === 0) {
+
+            table.innerHTML =
+                `<tr>
+                    <td colspan="4" class="empty">
+                        No tienes movimientos todavía.
+                    </td>
+                </tr>`;
+
+            return;
+        }
+
+        data.transactions
+            .slice()
+            .reverse()
+            .forEach(item => {
+
+                let sign =
+                    item.amount >= 0 ? "+" : "";
+
+                table.innerHTML += `
+                    <tr>
+                        <td>${item.type}</td>
+                        <td>${sign}$${Math.abs(item.amount).toFixed(2)}</td>
+                        <td>
+                            <span class="badge">
+                                ${item.status}
+                            </span>
+                        </td>
+                        <td>${item.date}</td>
+                    </tr>
+                `;
+            });
+    }
+
+
+    /* ============================
+       MODALES
+    ============================ */
+
+    function openModal(id) {
+        document.getElementById(id)
+            .classList.add("active");
+    }
+
+    function closeModal(id) {
+        document.getElementById(id)
+            .classList.remove("active");
+    }
+
+
+    window.addEventListener("click", function(e) {
+
+        if (e.target.classList.contains("modal")) {
+            e.target.classList.remove("active");
+        }
+
+    });
+
+
+    /* ============================
+       DEPÓSITOS
+    ============================ */
+
+    function requestDeposit() {
+
+        let amount =
+            Number(document.getElementById("depositAmount").value);
+
+        if (!amount || amount <= 0) {
+
+            alert("Escribe una cantidad válida.");
+
+            return;
+        }
+
+        data.deposits.push({
+
+            amount: amount,
+
+            status: "Pendiente",
+
+            date: new Date().toLocaleDateString()
+
+        });
+
+        data.transactions.push({
+
+            type: "💰 Depósito",
+
+            amount: amount,
+
+            status: "Pendiente",
+
+            date: "Ahora"
+
+        });
+
+        saveData();
+
+        updateUI();
+
+        closeModal("depositModal");
+
+        document.getElementById("depositAmount").value = "";
+
+        alert(
+            "✅ Solicitud enviada.\n\n" +
+            "El administrador debe aprobar el depósito."
+        );
+    }
+
+
+    /* ============================
+       RETIROS
+    ============================ */
+
+    function requestWithdraw() {
+
+        let amount =
+            Number(document.getElementById("withdrawAmount").value);
+
+        let phone =
+            document.getElementById("cubacelNumber").value.trim();
+
+        if (!amount || amount <= 0) {
+
+            alert("Escribe una cantidad válida.");
+
+            return;
+        }
+
+        if (amount > data.balance) {
+
+            alert("❌ No tienes suficiente saldo.");
+
+            return;
+        }
+
+        if (!phone) {
+
+            alert("Escribe el número Cubacel receptor.");
+
+            return;
+        }
+
+        data.withdrawals.push({
+
+            amount: amount,
+
+            phone: phone,
+
+            status: "Pendiente",
+
+            date: new Date().toLocaleDateString()
+
+        });
+
+        data.transactions.push({
+
+            type: "📲 Retiro",
+
+            amount: -amount,
+
+            status: "Pendiente",
+
+            date: "Ahora"
+
+        });
+
+        saveData();
+
+        updateUI();
+
+        closeModal("withdrawModal");
+
+        document.getElementById("withdrawAmount").value = "";
+
+        document.getElementById("cubacelNumber").value = "";
+
+        alert(
+            "✅ Solicitud enviada.\n\n" +
+            "El administrador revisará tu solicitud.\n" +
+            "El saldo no se descontará hasta que sea aprobada."
+        );
+    }
+
+
+    /* ============================
+       PERFIL
+    ============================ */
+
+    function editProfile() {
+
+        document.getElementById("editName").value =
+            data.name;
+
+        document.getElementById("editUsername").value =
+            data.username;
+
+        openModal("profileModal");
+    }
+
+
+    function saveProfile() {
+
+        let name =
+            document.getElementById("editName").value.trim();
+
+        let username =
+            document.getElementById("editUsername").value.trim();
+
+        if (!name) {
+
+            alert("Escribe tu nombre.");
+
+            return;
+        }
+
+        data.name = name;
+
+        data.username =
+            username || "@usuario";
+
+        saveData();
+
+        updateUI();
+
+        closeModal("profileModal");
+
+        alert("✅ Perfil actualizado.");
+    }
+
+
+    /* ============================
+       REGALOS
+    ============================ */
+
+    function showGifts() {
+
+        let gifts =
+            data.transactions.filter(
+                x => x.type.includes("🎁")
+            );
+
+        if (gifts.length === 0) {
+
+            alert(
+                "🎁 No tienes regalos todavía."
+            );
+
+            return;
+        }
+
+        let total = gifts.reduce(
+            (sum, item) =>
+                sum + Math.max(0, item.amount),
+            0
+        );
+
+        alert(
+            "🎁 MIS REGALOS\n\n" +
+            "Regalos recibidos: " +
+            gifts.length +
+            "\n\nValor total: $" +
+            total.toFixed(2)
+        );
+    }
+
+
+    /* ============================
+       ESTADÍSTICAS
+    ============================ */
+
+    function showStats() {
+
+        alert(
+            "📊 TUS ESTADÍSTICAS\n\n" +
+
+            "⚽ Partidos: " +
+            data.stats.matches +
+
+            "\n🏆 Victorias: " +
+            data.stats.wins +
+
+            "\n🔥 Racha: " +
+            data.stats.streak +
+
+            "\n⭐ Puntos: " +
+            data.stats.points
+        );
+    }
+
+
+    /* ============================
+       HISTORIAL
+    ============================ */
+
+    function showHistory() {
+
+        if (data.transactions.length === 0) {
+
+            alert("No tienes movimientos.");
+
+            return;
+        }
+
+        let text =
+            "🧾 HISTORIAL\n\n";
+
+        data.transactions
+            .slice()
+            .reverse()
+            .slice(0, 10)
+            .forEach((item, index) => {
+
+                let sign =
+                    item.amount >= 0 ? "+" : "";
+
+                text +=
+                    (index + 1) +
+                    ". " +
+                    item.type +
+                    " " +
+                    sign +
+                    "$" +
+                    Math.abs(item.amount).toFixed(2) +
+                    " — " +
+                    item.status +
+                    "\n";
+            });
+
+        alert(text);
+    }
+
+
+    /* ============================
+       ADMIN
+    ============================ */
+
+    function openAdmin() {
+
+        let password =
+            prompt(
+                "🔐 PANEL DE ADMINISTRADOR\n\n" +
+                "Introduce la contraseña:"
+            );
+
+        /*
+           CONTRASEÑA DEMO.
+           Para producción debe verificarse
+           desde un servidor, NO desde HTML.
+        */
+
+        if (password === "Anthony2026") {
+
+            let option =
+                prompt(
+                    "👑 PANEL DE ANTHONY\n\n" +
+
+                    "1 - Añadir saldo\n" +
+                    "2 - Quitar saldo\n" +
+                    "3 - Establecer saldo\n" +
+                    "4 - Enviar regalo\n" +
+                    "5 - Ver solicitudes\n\n" +
+
+                    "Escribe el número:"
+                );
+
+            if (option === "1") {
+
+                let amount =
+                    Number(
+                        prompt("Cantidad a añadir:")
+                    );
+
+                if (amount > 0) {
+
+                    data.balance += amount;
+
+                    data.transactions.push({
+
+                        type: "➕ Saldo añadido",
+
+                        amount: amount,
+
+                        status: "Completado",
+
+                        date: "Ahora"
+
+                    });
+
+                    saveData();
+
+                    updateUI();
+
+                    alert(
+                        "✅ Saldo añadido correctamente."
+                    );
+                }
+
+            } else if (option === "2") {
+
+                let amount =
+                    Number(
+                        prompt("Cantidad a quitar:")
+                    );
+
+                if (amount > 0) {
+
+                    data.balance =
+                        Math.max(
+                            0,
+                            data.balance - amount
+                        );
+
+                    data.transactions.push({
+
+                        type: "➖ Saldo retirado",
+
+                        amount: -amount,
+
+                        status: "Completado",
+
+                        date: "Ahora"
+
+                    });
+
+                    saveData();
+
+                    updateUI();
+
+                    alert(
+                        "✅ Saldo actualizado."
+                    );
+                }
+
+            } else if (option === "3") {
+
+                let amount =
+                    Number(
+                        prompt("Nuevo saldo:")
+                    );
+
+                if (amount >= 0) {
+
+                    let difference =
+                        amount - data.balance;
+
+                    data.balance = amount;
+
+                    data.transactions.push({
+
+                        type: "⚙️ Saldo establecido",
+
+                        amount: difference,
+
+                        status: "Completado",
+
+                        date: "Ahora"
+
+                    });
+
+                    saveData();
+
+                    updateUI();
+
+                    alert(
+                        "✅ Saldo establecido."
+                    );
+                }
+
+            } else if (option === "4") {
+
+                let amount =
+                    Number(
+                        prompt("Cantidad del regalo:")
+                    );
+
+                if (amount > 0) {
+
+                    data.balance += amount;
+
+                    data.transactions.push({
+
+                        type: "🎁 Regalo",
+
+                        amount: amount,
+
+                        status: "Completado",
+
+                        date: "Ahora"
+
+                    });
+
+                    saveData();
+
+                    updateUI();
+
+                    alert(
+                        "🎁 Regalo enviado correctamente."
+                    );
+                }
+
+            } else if (option === "5") {
+
+                let pending =
+                    data.withdrawals.filter(
+                        x => x.status === "Pendiente"
+                    ).length;
+
+                alert(
+                    "📋 SOLICITUDES\n\n" +
+                    "Retiros pendientes: " +
+                    pending +
+                    "\n" +
+                    "Depósitos recibidos: " +
+                    data.deposits.length
+                );
+
+            } else {
+
+                alert("Opción no válida.");
+            }
+
+        } else {
+
+            alert(
+                "❌ Contraseña incorrecta."
+            );
+        }
+    }
+
+
+    /* ============================
+       NAVEGACIÓN
+    ============================ */
+
+    function scrollToTop() {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    /* ============================
+       INICIO
+    ============================ */
+
+    updateUI();
+
+</script>
+
+</body>
+</html>
